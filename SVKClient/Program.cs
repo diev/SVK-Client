@@ -1,9 +1,11 @@
 using SVKClient;
 
 IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
+    .ConfigureServices((context, services) =>
     {
-        services.AddHostedService<Worker>();
+        services
+            .Configure<AppSettings>(context.Configuration.GetSection(nameof(AppSettings)))
+            .AddHostedService<Worker>();
     })
     .Build();
 
