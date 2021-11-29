@@ -5,7 +5,9 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         services
             .Configure<AppSettings>(context.Configuration)
-            .AddHostedService<Worker>();
+            .AddSingleton<IExchProcess, ExchProcess>()
+            .AddHostedService<UploadWorker>()
+            .AddHostedService<DownloadWorker>();
     })
     .Build();
 
